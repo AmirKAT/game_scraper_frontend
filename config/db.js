@@ -4,6 +4,7 @@ const pool = new Pool({
 	host: 'localhost',
 	database: 'gamerhaven',
 	password: 'password',
-	port: 5433,
+	port: 5432,
   })
   module.exports = pool;
+// Connecting to database

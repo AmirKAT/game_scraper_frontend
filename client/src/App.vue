@@ -1,7 +1,7 @@
 <template>
 <div id='root'>
    
-    <Header title="ProductZone "></Header>
+    <Header title="GamerHaven "></Header>
     <router-view />
   </div>
 </template>

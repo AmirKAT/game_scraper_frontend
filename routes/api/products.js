@@ -1,35 +1,23 @@
 const express = require('express')
 const router = express.Router();
- 
- 
- 
 
 const pool = require('../../config/db')
 router.get('/',async(req,res)=>{
   try {
-    
-      const results = await pool.query('select * from products');
+    // Selecting all rows in product table
+      const results = await pool.query('select * from product');
       return res.json(results.rows);
   } catch (error) {
       res.json({error:error})
   }
 })
-router.delete('/:id',async(req,res)=>{
-  try {
-  
-      const rees = await pool.query(`DELETE FROM products where id = ${req.params.id}`);
-      return res.json(rees)
-  } catch (error) {
-      res.json({error:error})
-  }
-})
 
-
+// Search function to get specific rows from product table
 router.get('/search/:query',async(req,res)=>{
   try {
        
-     
-      const results = await pool.query('select * from products where title=$1' ,[req.params.query])
+    // Selecting all rows from product table with case insensitive search query
+      const results = await pool.query("select * from product where title ilike '%' || $1 || '%'",[req.params.query])
       return res.json(results.rows)
       if(results.rowCount > 0){
           return res.json(results.rows);

@@ -8,6 +8,7 @@
                 <input v-model="query" type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
             </div>
             <div class="mb-3">
+            <!-- gets and displays games searched by user -->
             <button class="btn btn-primary" @click="fetchRecords"> Search </button>
             </div>
             <div v-if="err" class="alert alert-danger">{{error}}</div>
@@ -31,10 +32,9 @@
                         <td data-column="">{{data.id}}</td>
                         <td data-column=" ">{{data.title}}</td>
                         <td data-column=" ">{{data.genre}}</td>
-                        <td data-column=" ">{{data.price}} $</td>
-                          <td data-column=""><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxCT-OnvZzD6sSOUYwj-ZaK4WvWG5o5NZZFw&usqp=CAU" style="width:250px;height:150px" alt="Product image"/></td>
-                        <td data-column=" "><a :href="''+data.link" class="btn btn-info border-5">Visit product</a></td>
-                        
+                        <td data-column=" ">{{data.price}}</td>
+                        <td data-column=""><img :src="'' + data.image"></td>
+                        <td data-column=" "><a :href="''+data.link" class="btn btn-info border-5">Visit product</a></td>  
                     </tr>
                 </tbody>
             </table>
@@ -49,7 +49,7 @@ export default {
      components:{
 	},
 	created(){
-		 //this.fetchRecords();
+		console.log('')
 	},
 	data(){
 		return{
@@ -57,13 +57,14 @@ export default {
             loading:true,
             loader:loader,
             query:'',
-            error:'Sorry No records found',
+            error:'No records found',
             err:false,
 		}
 	},
 	methods:{
           fetchRecords(){
               this.loading = false;
+              // sql query from user search request used to retrieve specific products from database
               axios.get(`http://localhost:5000/api/products/search/${this.query}`,{headers: {
                     'Access-Control-Allow-Origin': '*'}}).then(res=>{
                         
